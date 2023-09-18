@@ -1,0 +1,7 @@
+{
+  "name": "@fullstack-app/utils",
+  "version": "1.0.0",
+  "description": "Utilities",
+	"type": "module",
+  "main": "index.js"
+}
