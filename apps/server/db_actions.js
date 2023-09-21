@@ -5,16 +5,16 @@ export function createUsersTable() {
   db.serialize(() => {
     db.run(`CREATE TABLE users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			username TEXT NOT NULL UNIQUE,
+			email TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL
 		)`);
   });
   db.close();
 }
 
-export function addUser(username, password, callback) {
+export function createUser(email, password, callback) {
   const db = new sqlite3.Database("./users.db");
-  db.run(`INSERT INTO users (username, password) VALUES ('${username}', '${password}')`, callback);
+  db.run(`INSERT INTO users (email, password) VALUES ('${email}', '${password}')`, callback);
   db.close();
 }
 
@@ -27,12 +27,6 @@ export function getUsers(callback, limit = 2000) {
 export function getUserById(id, callback) {
   const db = new sqlite3.Database("./users.db");
   db.get(`SELECT * FROM users WHERE id = ${id}`, callback);
-  db.close();
-}
-
-export function getUserByUsername(username, callback) {
-  const db = new sqlite3.Database("./users.db");
-  db.get(`SELECT * FROM users WHERE username = '${username}'`, callback);
   db.close();
 }
 

@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { addUser, createUsersTable, deleteUserById, getUserById, getUsers } from "./db_actions.js";
+import { createUser, createUsersTable, deleteUserById, getUserById, getUsers } from "./db_actions.js";
 
 const app = express();
 
@@ -10,7 +10,7 @@ app.get("/", (req, res, err) => {
   res.end("You've reached server");
 });
 
-app.post("/create-table", (req, res, error) => {
+app.post("/create-users-table", (req, res, error) => {
   createUsersTable();
   res.end();
 });
@@ -25,25 +25,33 @@ app.get("/users/:id", (req, res, error) => {
       res.end(errorMessage);
       return;
     }
+    if (!user) {
+      res.status(400);
+      res.end(`Cannot find user with id of ${id}`);
+      return;
+    }
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.end(JSON.stringify(user));
   });
 });
 
 app.post("/users", (req, res, error) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   // simple validation
-  if (!username || !password) {
+  const missingFields = [];
+  if (!email) missingFields.push("email");
+  if (!password) missingFields.push("password");
+  if (missingFields.length > 0) {
     res.status(400);
-    res.end(!username ? "username missing" : "password missing");
+    res.end("Fields missing: " + missingFields.join(", "));
     return;
   }
   // insert into db
-  addUser(username, password, (error) => {
+  createUser(email, password, (error) => {
     if (error) {
       console.error(error);
       res.status(500);
-      res.end("Failed to create user");
+      res.end("Failed to create user"); // most likely an user with the same email already existed
       return;
     }
     res.end();
