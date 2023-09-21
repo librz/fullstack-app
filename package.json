@@ -1,9 +1,10 @@
 {
-  "name": "fullstack-app",
-  "version": "1.0.0",
-  "description": "A monorepo full stack project",
+	"name": "fullstack-app",
+	"version": "1.0.0",
+	"description": "A monorepo full stack project",
 	"private": true,
 	"workspaces": [
-		"packages/*"	
+		"packages/*",
+		"apps/*"
 	]
 }
