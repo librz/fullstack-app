@@ -43,9 +43,8 @@ app.get("/users/:id", (req, res, error) => {
   getUserById(id, (err, user) => {
     if (err) {
       console.error(err);
-      const errorMessage = `Failed to get user with id ${id}`;
       res.status(400);
-      res.end(errorMessage);
+      res.end(`Failed to get user with id ${id}`);
       return;
     }
     if (!user) {
@@ -100,9 +99,8 @@ app.delete("/users/:id", (req, res, error) => {
   deleteUserById(id, (err) => {
     if (err) {
       console.error(err);
-      const errorMessage = `Failed to delete user with id ${id}`;
       res.status(400);
-      res.end(errorMessage);
+      res.end(`Failed to delete user with id ${id}`);
       return;
     }
     res.end();
@@ -120,6 +118,7 @@ app.patch("/users/:id", (req, res) => {
   }
   updateUserPassword(id, password, (error) => {
     if (error) {
+      console.error(error);
       res.status(404);
       res.end(`Cannot find user with id ${id}`);
       return;
