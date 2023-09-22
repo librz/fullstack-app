@@ -6,8 +6,17 @@ export function createUsersTable() {
     db.run(`CREATE TABLE users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			email TEXT NOT NULL UNIQUE,
-			password TEXT NOT NULL
+			password TEXT NOT NULL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      last_modified TEXT DEFAULT CURRENT_TIMESTAMP
 		)`);
+    db.run(`CREATE TRIGGER update_users_last_modified
+      BEFORE UPDATE ON users
+      BEGIN
+        UPDATE users
+          SET last_modified = CURRENT_TIMESTAMP
+        WHERE id = old.id;
+      END;`);
   });
   db.close();
 }
@@ -33,5 +42,11 @@ export function getUserById(id, callback) {
 export function deleteUserById(id, callback) {
   const db = new sqlite3.Database("./users.db");
   db.run(`DELETE FROM users WHERE id = '${id}'`, callback);
+  db.close();
+}
+
+export function updateUserPassword(id, newPassword, callback) {
+  const db = new sqlite3.Database("./users.db");
+  db.run(`UPDATE users SET password ='${newPassword}' WHERE id = '${id}'`, callback);
   db.close();
 }

@@ -1,6 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { createUser, createUsersTable, deleteUserById, getUserById, getUsers } from "./db_actions.js";
+import {
+  createUser,
+  createUsersTable,
+  deleteUserById,
+  getUserById,
+  getUsers,
+  updateUserPassword,
+} from "./db_actions.js";
 
 const app = express();
 
@@ -15,6 +22,22 @@ app.post("/create-users-table", (req, res, error) => {
   res.end();
 });
 
+// get all users
+app.get("/users", (req, res, error) => {
+  getUsers((err, users) => {
+    if (err) {
+      console.error(err);
+      res.status(500);
+      res.end();
+      return;
+    }
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.send(JSON.stringify(users));
+    res.end();
+  });
+});
+
+// get user by id
 app.get("/users/:id", (req, res, error) => {
   const { id } = req.params;
   getUserById(id, (err, user) => {
@@ -35,7 +58,20 @@ app.get("/users/:id", (req, res, error) => {
   });
 });
 
+// create new user
 app.post("/users", (req, res, error) => {
+  // content-type header validation
+  const contentType = req.headers["content-type"];
+  if (!contentType) {
+    res.status(400);
+    res.end("Missing header: Content-Type");
+    return;
+  }
+  if (!contentType.toLowerCase().includes("application/json")) {
+    res.status(400);
+    res.end(`Wrong Content-Type: ${contentType}`);
+    return;
+  }
   const { email, password } = req.body;
   // simple validation
   const missingFields = [];
@@ -58,19 +94,7 @@ app.post("/users", (req, res, error) => {
   });
 });
 
-app.get("/users", (req, res, error) => {
-  getUsers((err, users) => {
-    if (err) {
-      res.status(500);
-      res.end();
-      return;
-    }
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.send(JSON.stringify(users));
-    res.end();
-  });
-});
-
+// delete user by id
 app.delete("/users/:id", (req, res, error) => {
   const { id } = req.params;
   deleteUserById(id, (err) => {
@@ -79,6 +103,25 @@ app.delete("/users/:id", (req, res, error) => {
       const errorMessage = `Failed to delete user with id ${id}`;
       res.status(400);
       res.end(errorMessage);
+      return;
+    }
+    res.end();
+  });
+});
+
+// update user by id
+app.patch("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  if (!password) {
+    res.status(400);
+    res.end("Missing field: password");
+    return;
+  }
+  updateUserPassword(id, password, (error) => {
+    if (error) {
+      res.status(404);
+      res.end(`Cannot find user with id ${id}`);
       return;
     }
     res.end();
