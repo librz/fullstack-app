@@ -1,0 +1,72 @@
+{
+  "auth": {
+    "signup": {
+      "label": "注册",
+      "already_have_account": "已有账户？",
+      "create_account": "创建账户",
+      "fields": {
+        "company": {
+          "label": "公司",
+          "placeholder": "公司名称"
+        },
+        "first_name": {
+          "label": "名",
+          "placeholder": "约翰"
+        },
+        "last_name": {
+          "label": "姓",
+          "placeholder": "史密斯"
+        },
+        "email": {
+          "label": "电子邮件",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "密码",
+          "placeholder": "你的密码"
+        },
+        "confirm_password": {
+          "label": "确认密码",
+          "placeholder": "确认密码"
+        }
+      },
+      "account_created": {
+        "title": "帐户已创建",
+        "message": "您的帐户已成功创建，现在尝试登录"
+      }
+    },
+    "login": {
+      "label": "登入",
+      "welcome_back": "欢迎回来",
+      "no_account": "还没有帐户？",
+      "create_account": "创建账户",
+      "fields": {
+        "email": {
+          "label": "电子邮件",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "密码",
+          "placeholder": "你的密码"
+        }
+      }
+    },
+    "logout": {
+      "label": "登出"
+    }
+  },
+  "menus": {
+    "dashboard": "仪表板",
+    "billing": "计费",
+    "settings": "设置"
+  },
+  "settings": {
+    "lang": "语言"
+  },
+  "profile": {
+    "user_profile": "用户资料",
+    "full_name": "全名",
+    "email_address": "电子邮件",
+    "company_name": "公司名称"
+  }
+}

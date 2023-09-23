@@ -1,0 +1,72 @@
+{
+  "auth": {
+    "signup": {
+      "label": "Sign up",
+      "already_have_account": "Already have an account?",
+      "create_account": "Create Account",
+      "fields": {
+        "company": {
+          "label": "Company",
+          "placeholder": "Name of the company"
+        },
+        "first_name": {
+          "label": "First Name",
+          "placeholder": "John"
+        },
+        "last_name": {
+          "label": "Last Name",
+          "placeholder": "Smith"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Your password"
+        },
+        "confirm_password": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm Password"
+        }
+      },
+      "account_created": {
+        "title": "Account created",
+        "message": "Your account is successfully created, now try login"
+      }
+    },
+    "login": {
+      "label": "Sign in",
+      "welcome_back": "Welcome back!",
+      "no_account": "Do not have an account yet?",
+      "create_account": "Create Account",
+      "fields": {
+        "email": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Your password"
+        }
+      }
+    },
+    "logout": {
+      "label": "Logout"
+    }
+  },
+  "menus": {
+    "dashboard": "Dashboard",
+    "billing": "Billing",
+    "settings": "Settings"
+  },
+  "settings": {
+    "lang": "Language"
+  },
+  "profile": {
+    "user_profile": "User Profile",
+    "full_name": "Full Name",
+    "email_address": "Email Address",
+    "company_name": "Company Name"
+  }
+}
