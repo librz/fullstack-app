@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from "body-parser";
+import pretty from "express-prettify";
 import {
   createUser,
   createUsersTable,
@@ -11,9 +11,12 @@ import {
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
+
+app.use(pretty({ query: "pretty" })); // prettify res.json when 'pretty' is present as url query
 
 app.get("/", (req, res, err) => {
+  res.type("text");
   res.end("You've reached server");
 });
 
@@ -31,8 +34,7 @@ app.get("/users", (req, res, error) => {
       res.end();
       return;
     }
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.send(JSON.stringify(users));
+    res.json(users);
     res.end();
   });
 });
@@ -52,8 +54,8 @@ app.get("/users/:id", (req, res, error) => {
       res.end(`Cannot find user with id of ${id}`);
       return;
     }
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.end(JSON.stringify(user));
+    res.json(user);
+    res.end();
   });
 });
 
@@ -110,6 +112,7 @@ app.delete("/users/:id", (req, res, error) => {
 // update user by id
 app.patch("/users/:id", (req, res) => {
   const { id } = req.params;
+  console.log("req body", req.body);
   const { password } = req.body;
   if (!password) {
     res.status(400);
