@@ -4,7 +4,7 @@ export function createUsersTable() {
   const db = new sqlite3.Database("./users.db");
   db.serialize(() => {
     // create table
-    db.run(`CREATE TABLE users (
+    db.run(`CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			email TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL,
