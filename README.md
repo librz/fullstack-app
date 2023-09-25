@@ -1,4 +1,4 @@
-# Demostration of a fullstack monorepo app (using npm workspacekjo
+# Demo of a fullstack monorepo (using npm workspace)
 
 ### scripts
 
